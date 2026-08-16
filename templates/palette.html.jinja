@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Color palette for {{ filename }}</title>
+
+  <link rel="stylesheet" href="./templates/style.css">
+</head>
+
+<body>
+
+  <main class="wrapper">
+
+    <h1>Color palette for {{ filename }}</h1>
+
+    <div class="image">
+      <img src="{{ filepath }}" alt="User provided image">
+    </div>
+
+    <ol class="palette">
+{% for item in palette %}
+      <li>
+        <span class="swatch" style="background: {{ item.color }};"></span>
+        <span>{{ item.color }}</span>
+        <span>{{ item.percentage }}%</span>
+      </li>
+{% endfor %}
+    </ol>
+
+  </main>
+
+</body>
+
+</html>

@@ -8,3 +8,4 @@ Copyright 2026. Andrew Wang
 from .elbow import cluster_count as cluster_count
 from .lab import get_pixels as get_pixels
 from .cluster import compute_palette as compute_palette
+from .display import render_page as render_page
