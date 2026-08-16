@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 
 
 def compute_palette(
-        pixels: np.ndarray[tuple[int, int]], num_colors: int, verbose: bool) -> pd.DataFrame:
+        pixels: np.ndarray[tuple[int, int]],
+        num_colors: int, verbose: bool) -> pd.DataFrame:
     """Compute color palette from image and organize in DataFrame."""
     logger.info('Clustering image pixels into %d palette colors', num_colors)
     kms = KMeans(
