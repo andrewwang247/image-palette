@@ -24,7 +24,7 @@ def main(
         clusters: int | None,
         output: str | None,
         verbose: bool) -> None:
-    """Handle user input and run palette extraction."""
+    """Extract color palette from provided image."""
     logging.basicConfig(level=logging.INFO if verbose else logging.WARN)
     pixels = get_pixels(filename)
     optimal_k = cluster_count(
