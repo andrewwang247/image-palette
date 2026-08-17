@@ -10,7 +10,7 @@ from jinja2 import Environment, FileSystemLoader, Template
 import pandas as pd
 
 TEMPLATE_DIR = 'templates'
-TEMPLATE_NAME = 'palette.html.jinja'
+TEMPLATE_NAME = 'palette.jinja'
 
 logger = logging.getLogger(__name__)
 
