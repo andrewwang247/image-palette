@@ -4,7 +4,9 @@ Compute pixel clustering of image colors.
 Copyright 2026. Andrew Wang.
 """
 import logging
+from typing import Any
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 from sklearn.cluster import KMeans  # type: ignore
 from .lab import to_rgb
@@ -14,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 def compute_palette(
-        pixels: np.ndarray[tuple[int, int]],
+        pixels: npt.NDArray[np.floating[Any]],
         num_colors: int, verbose: bool) -> pd.DataFrame:
     """Compute color palette from image and organize in DataFrame."""
     logger.info('Clustering image pixels into %d palette colors', num_colors)
