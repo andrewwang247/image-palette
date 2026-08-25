@@ -24,6 +24,7 @@ def _get_template() -> Template:
 
 
 def _format_dataframe(df: pd.DataFrame) -> List[Dict[str, Any]]:
+    """Format DataFrame as list of color / percentage objects."""
     colors = []
     for row in df.itertuples(index=False):
         item = {

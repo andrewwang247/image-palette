@@ -4,6 +4,7 @@ Convert between sRGB and OkLAB image formats.
 Copyright 2026. Andrew Wang.
 """
 import logging
+from typing import Any
 import numpy as np
 import numpy.typing as npt
 from PIL import Image
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 MAX_DIM = (1024, 1024)
 
 
-def to_lab(img: Image.Image) -> np.ndarray[tuple[int, int]]:
+def _to_lab(img: Image.Image) -> npt.NDArray[np.floating[Any]]:
     """Convert Image to Oklab format."""
     img_arr = np.array(img.convert('RGB')) / SRGB_SCALING
     logger.info('Converting from sRGB to CIE XYZ')
@@ -25,14 +26,14 @@ def to_lab(img: Image.Image) -> np.ndarray[tuple[int, int]]:
     return img_lab.reshape(-1, 3)
 
 
-def get_pixels(fname: str) -> np.ndarray[tuple[int, int]]:
+def get_pixels(fname: str) -> npt.NDArray[np.floating[Any]]:
     """Convert image file into flat pixel array in Ok LAB space."""
     logger.info('Opening image file %s', fname)
     img = Image.open(fname)
     logger.info('Before resampling: %d x %d px', img.width, img.height)
     img.thumbnail(MAX_DIM, Image.Resampling.LANCZOS)
     logger.info('After resampling: %d x %d px', img.width, img.height)
-    return to_lab(img)
+    return _to_lab(img)
 
 
 def to_rgb(lab_arr: npt.NDArray[np.float64]) -> npt.NDArray[np.int_]:

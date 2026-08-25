@@ -4,7 +4,9 @@ Find the optimal number of clusters with the elbow method.
 Copyright 2026. Andrew Wang.
 """
 import logging
+from typing import Any
 import numpy as np
+import numpy.typing as npt
 from tqdm import tqdm
 from kneed import KneeLocator  # type: ignore
 from sklearn.cluster import KMeans  # type: ignore
@@ -14,7 +16,7 @@ MAX_CLUSTERS = 8
 logger = logging.getLogger(__name__)
 
 
-def cluster_count(pixels: np.ndarray[tuple[int, int]], verbose: bool) -> int:
+def cluster_count(pixels: npt.NDArray[np.floating[Any]], verbose: bool) -> int:
     """Use elbow method to find optimal number of clusters."""
     logger.info(
         'Using elbow method to find best clustering between %d and %d',

@@ -4,19 +4,19 @@ Extract color palette from provided image.
 Copyright 2026. Andrew Wang.
 """
 import logging
-from click import command, option, Path as cPath
+from click import command, option, Path
 from src import cluster_count, get_pixels, compute_palette, render_page
 # pylint: disable=no-value-for-parameter
 
 
 @command()
 @option('--filename', '-f', required=True,
-        type=cPath(exists=True, file_okay=True, dir_okay=False, readable=True),
+        type=Path(exists=True, file_okay=True, dir_okay=False, readable=True),
         help='Path to image file.')
 @option('--clusters', '-c', required=False, type=int, default=None,
         help='Number of palette colors. Automatic if not set.')
 @option('--output', '-o', required=False,
-        type=cPath(exists=False), help='Path to output html.')
+        type=Path(exists=False), help='Path to output html.')
 @option('--verbose', '-v', is_flag=True, default=False,
         help='Displays application logs if set.')
 def main(
