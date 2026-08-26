@@ -27,6 +27,7 @@ def _format_dataframe(df: pd.DataFrame) -> List[Dict[str, Any]]:
     """Format DataFrame as list of color / percentage objects."""
     colors = []
     for row in df.itertuples(index=False):
+        logger.info('Formatting DataFrame row %s', row)
         item = {
             'color': row.hex,
             'percentage': row.prevalence

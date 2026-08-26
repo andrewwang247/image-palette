@@ -1,6 +1,6 @@
 # Image Palette
 
-Extract perceptually accurate color palettes representative of the dominant hues in an image. User can either specify the number of colors in the palette or let the software choose algorithmically. If an output is specified, a webpage is generated that previews the image alongside the palette colors. Otherwise, a table of colors and their prevalence is logged to stdout.
+Extract perceptually accurate color palettes representative of the dominant hues in an image. User can either specify the number of colors in the palette or let the software choose algorithmically. A table of colors and their prevalence is logged to stdout. If the `output` option is specified, a webpage is generated that previews the image alongside the palette colors.
 
 ## Usage
 

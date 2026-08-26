@@ -30,12 +30,12 @@ def main(
     optimal_k = cluster_count(
         pixels, verbose) if clusters is None else clusters
     df = compute_palette(pixels, optimal_k, verbose)
-    if output is not None:
-        html = render_page(filename, df)
-        with open(output, 'w', encoding='utf-8') as fp:
-            fp.write(html)
-    else:
-        print(df.to_string(index=False))
+    print(df.to_string(index=False))
+    if output is None:
+        return
+    html = render_page(filename, df)
+    with open(output, 'w', encoding='utf-8') as fp:
+        fp.write(html)
 
 
 if __name__ == '__main__':
