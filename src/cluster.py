@@ -17,13 +17,15 @@ logger = logging.getLogger(__name__)
 
 def compute_palette(
         pixels: npt.NDArray[np.floating[Any]],
-        num_colors: int, verbose: bool) -> pd.DataFrame:
+        num_colors: int, verbose: bool = False,
+        rand_state: int | None = None) -> pd.DataFrame:
     """Compute color palette from image and organize in DataFrame."""
     logger.info('Clustering image pixels into %d palette colors', num_colors)
     kms = KMeans(
         n_clusters=num_colors,
         n_init=CLUSTER_INITS,
-        verbose=1 if verbose else 0)
+        verbose=1 if verbose else 0,
+        random_state=rand_state)
     labels = kms.fit_predict(pixels)
     cluster_sizes = np.bincount(labels)
     centers = to_rgb(kms.cluster_centers_)

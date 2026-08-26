@@ -16,7 +16,9 @@ MAX_CLUSTERS = 8
 logger = logging.getLogger(__name__)
 
 
-def cluster_count(pixels: npt.NDArray[np.floating[Any]], verbose: bool) -> int:
+def cluster_count(pixels: npt.NDArray[np.floating[Any]],
+                  verbose: bool = False,
+                  rand_state: int | None = None) -> int:
     """Use elbow method to find optimal number of clusters."""
     logger.info(
         'Using elbow method to find best clustering between %d and %d',
@@ -25,7 +27,10 @@ def cluster_count(pixels: npt.NDArray[np.floating[Any]], verbose: bool) -> int:
     inertias = []
     cluster_range = range(MIN_CLUSTERS, MAX_CLUSTERS + 1)
     for n_clusters in (cluster_range if verbose else tqdm(cluster_range)):
-        kms = KMeans(n_clusters, verbose=1 if verbose else 0)
+        kms = KMeans(
+            n_clusters,
+            verbose=1 if verbose else 0,
+            random_state=rand_state)
         kms.fit(pixels)
         inertias.append(kms.inertia_)
 
