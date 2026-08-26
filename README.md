@@ -25,6 +25,10 @@ Options:
 4. If the number of colors / clusters is not specified, we use the [elbow method](https://en.wikipedia.org/wiki/Elbow_method_\(clustering\)) to find the optimal quantity between 3 and 8, inclusive.
 5. If an output file is specified, we generate a webpage from a Jinja template. The webpage displays the image and a preview of the palette colors alongside their hex codes and prevalence.
 
+## Testing
+
+Unit tests cover the elbow method and palette clustering for all provided images. A fixed `random_state` is provided to make results deterministic. Run `pytest` to execute all tests.
+
 ## Acknowledgements
 
 This project was inspired by [Lokesh Dhakar's](https://lokeshdhakar.com/) and his [Color Thief](https://lokeshdhakar.com/projects/color-thief/) npm package. Our version uses K-means clustering rather than [median cut](https://en.wikipedia.org/wiki/Median_cut). All photos in the `images` directory are &copy; 2026 Andrew Wang. Licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
