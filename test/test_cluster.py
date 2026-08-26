@@ -37,5 +37,5 @@ def test_cluster(
         expected_df.shape[0],
         rand_state=RANDOM_SEED)
     pd.testing.assert_frame_equal(
-        expected_df.reset_index(drop=True),
-        actual_df.reset_index(drop=True))
+        expected_df.sort_values(by='hex').reset_index(drop=True),
+        actual_df.sort_values(by='hex').reset_index(drop=True))
