@@ -1,25 +1,27 @@
-"""
-Test elbow method for selecting number of clusters.
+"""Test elbow method for selecting number of clusters.
 
 Copyright 2026. Andrew Wang.
 """
-from typing import Dict, List, Tuple
+
 from json import load
-from pytest import mark
-from src import get_pixels, cluster_count
+from pathlib import Path
+
+import pytest
+
+from src import cluster_count, get_pixels
 
 RANDOM_SEED = 42
 
 
-def _get_elbows() -> List[Tuple[str, int]]:
+def _get_elbows() -> list[tuple[Path, int]]:
     """Load images and elbow solutions."""
-    with open('test/elbow.json', encoding='UTF-8') as fp:
-        elbows: Dict[str, int] = load(fp)
-    return list(elbows.items())
+    with Path("test/elbow.json").open(encoding="UTF-8") as fp:
+        elbows: dict[str, int] = load(fp)
+    return [(Path(key), value) for key, value in elbows.items()]
 
 
-@mark.parametrize('image_path,expected_clusters', _get_elbows())
-def test_elbow(image_path: str, expected_clusters: int) -> None:
+@pytest.mark.parametrize(("image_path", "expected_clusters"), _get_elbows())
+def test_elbow(image_path: Path, expected_clusters: int) -> None:
     """Test elbow method for images."""
     pixels = get_pixels(image_path)
     actual_clusters = cluster_count(pixels, rand_state=RANDOM_SEED)
