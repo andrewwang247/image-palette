@@ -10,7 +10,6 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 import numpy as np
-import numpy.typing as npt
 from colour.models import Oklab_to_XYZ, XYZ_to_Oklab, XYZ_to_sRGB, sRGB_to_XYZ
 from PIL import Image
 
@@ -19,8 +18,11 @@ logger = logging.getLogger(__name__)
 
 MAX_DIM = (1024, 1024)
 
+type IntGrid = np.ndarray[tuple[int, int], np.dtype[np.int_]]
+type FloatGrid = np.ndarray[tuple[int, int], np.dtype[np.floating[Any]]]
 
-def _to_lab(img: Image.Image) -> npt.NDArray[np.floating[Any]]:
+
+def _to_lab(img: Image.Image) -> FloatGrid:
     """Convert Image to Oklab format."""
     img_arr = np.array(img.convert("RGB")) / SRGB_SCALING
     logger.info("Converting from sRGB to CIE XYZ")
@@ -30,7 +32,7 @@ def _to_lab(img: Image.Image) -> npt.NDArray[np.floating[Any]]:
     return img_lab.reshape(-1, 3)
 
 
-def get_pixels(fpath: Path) -> npt.NDArray[np.floating[Any]]:
+def get_pixels(fpath: Path) -> FloatGrid:
     """Convert image file into flat pixel array in Ok LAB space."""
     logger.info("Opening image file %s", fpath)
     img = Image.open(fpath)
@@ -40,7 +42,7 @@ def get_pixels(fpath: Path) -> npt.NDArray[np.floating[Any]]:
     return _to_lab(img)
 
 
-def to_rgb(lab_arr: npt.NDArray[np.float64]) -> npt.NDArray[np.int_]:
+def to_rgb(lab_arr: FloatGrid) -> IntGrid:
     """Convert OK lab pixels into denormalized sRGB."""
     logger.info("Converting from Oklab to CIE XYZ")
     xyz_arr = Oklab_to_XYZ(lab_arr)

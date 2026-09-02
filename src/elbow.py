@@ -4,14 +4,14 @@ Copyright 2026. Andrew Wang.
 """
 
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    import numpy as np
-    import numpy.typing as npt
 from kneed import KneeLocator
 from sklearn.cluster import KMeans
 from tqdm import tqdm
+
+if TYPE_CHECKING:
+    from .lab import FloatGrid
 
 MIN_CLUSTERS = 3
 MAX_CLUSTERS = 8
@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 def cluster_count(
-    pixels: npt.NDArray[np.floating[Any]],
+    pixels: FloatGrid,
     rand_state: int | None = None,
     *,
     verbose: bool = False,

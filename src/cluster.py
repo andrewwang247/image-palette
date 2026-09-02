@@ -4,23 +4,19 @@ Copyright 2026. Andrew Wang.
 """
 
 import logging
-from typing import TYPE_CHECKING, Any
 
 import numpy as np
-
-if TYPE_CHECKING:
-    import numpy.typing as npt
 import pandas as pd
 from sklearn.cluster import KMeans
 
-from .lab import to_rgb
+from .lab import FloatGrid, to_rgb
 
 CLUSTER_INITS = 3
 logger = logging.getLogger(__name__)
 
 
 def compute_palette(
-    pixels: npt.NDArray[np.floating[Any]],
+    pixels: FloatGrid,
     num_colors: int,
     rand_state: int | None = None,
     *,
