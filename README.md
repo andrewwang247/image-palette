@@ -10,11 +10,11 @@ Usage: main.py [OPTIONS]
   Extract color palette from provided image.
 
 Options:
-  -f, --filename FILE     Path to image file.  [required]
-  -c, --clusters INTEGER  Number of palette colors. Automatic if not set.
-  -o, --output PATH       Path to output html.
-  -v, --verbose           Displays application logs if set.
-  --help                  Show this message and exit.
+  -i, --image_path FILE       Path to image file.  [required]
+  -c, --clusters INTEGER      Number of palette colors. Automatic if not set.
+  -o, --output_file FILENAME  Path to output html.
+  -v, --verbose               Displays application logs if set.
+  --help                      Show this message and exit.
 ```
 
 ## Methodology

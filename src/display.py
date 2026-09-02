@@ -37,12 +37,11 @@ def _format_dataframe(df: pd.DataFrame) -> list[dict[str, Any]]:
     return colors
 
 
-def render_page(fname: str, df: pd.DataFrame) -> str:
+def render_page(fpath: Path, df: pd.DataFrame) -> str:
     """Display palette in a webpage."""
     logger.info("Loading Jinja template from file system")
     template = _get_template()
-    path = Path(fname)
     logger.info("Rendering template with palette data")
     return template.render(
-        filename=path.name, filepath=path, palette=_format_dataframe(df)
+        filename=fpath.name, filepath=fpath, palette=_format_dataframe(df)
     )

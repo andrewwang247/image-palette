@@ -5,19 +5,22 @@ Copyright 2026. Andrew Wang.
 
 import logging
 from pathlib import Path
+from typing import TextIO
 
+from click import File, command, option
 from click import Path as cPath
-from click import command, option
 
 from src import cluster_count, compute_palette, get_pixels, render_page
 
 
 @command()
 @option(
-    "--filename",
-    "-f",
+    "--image_path",
+    "-i",
     required=True,
-    type=cPath(exists=True, file_okay=True, dir_okay=False, readable=True),
+    type=cPath(
+        exists=True, file_okay=True, dir_okay=False, readable=True, path_type=Path
+    ),
     help="Path to image file.",
 )
 @option(
@@ -29,10 +32,10 @@ from src import cluster_count, compute_palette, get_pixels, render_page
     help="Number of palette colors. Automatic if not set.",
 )
 @option(
-    "--output",
+    "--output_file",
     "-o",
     required=False,
-    type=cPath(exists=False),
+    type=File("w", encoding="UTF-8"),
     help="Path to output html.",
 )
 @option(
@@ -43,19 +46,17 @@ from src import cluster_count, compute_palette, get_pixels, render_page
     help="Displays application logs if set.",
 )
 def main(
-    filename: str, clusters: int | None, output: str | None, *, verbose: bool
+    image_path: Path, clusters: int | None, output_file: TextIO | None, *, verbose: bool
 ) -> None:
     """Extract color palette from provided image."""
     logging.basicConfig(level=logging.INFO if verbose else logging.WARNING)
-    pixels = get_pixels(Path(filename))
+    pixels = get_pixels(image_path)
     optimal_k = cluster_count(pixels, verbose=verbose) if clusters is None else clusters
     df = compute_palette(pixels, optimal_k, verbose=verbose)
     print(df.to_string(index=False))
-    if output is None:
-        return
-    html = render_page(filename, df)
-    with Path(output).open("w", encoding="UTF-8") as fp:
-        fp.write(html)
+    if output_file:
+        html = render_page(image_path, df)
+        output_file.write(html)
 
 
 if __name__ == "__main__":
