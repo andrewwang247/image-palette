@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from src import cluster_count, get_pixels
+from src import Clustering, Pixels
 
 RANDOM_SEED = 42
 
@@ -23,6 +23,7 @@ def _get_elbows() -> list[tuple[Path, int]]:
 @pytest.mark.parametrize(("image_path", "expected_clusters"), _get_elbows())
 def test_elbow(image_path: Path, expected_clusters: int) -> None:
     """Test elbow method for images."""
-    pixels = get_pixels(image_path)
-    actual_clusters = cluster_count(pixels, rand_state=RANDOM_SEED)
+    pixels = Pixels(image_path)
+    clustering = Clustering(pixels.as_ok_lab(), RANDOM_SEED)
+    actual_clusters = clustering.cluster_count()
     assert expected_clusters == actual_clusters
