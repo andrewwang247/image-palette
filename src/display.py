@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable
+
     import pandas as pd
 from jinja2 import Environment, FileSystemLoader, Template
 
@@ -27,14 +29,11 @@ def _get_template() -> Template:
     return jinja_env.get_template(TEMPLATE_NAME)
 
 
-def _format_dataframe(df: pd.DataFrame) -> list[dict[str, Any]]:
-    """Format DataFrame as list of color / percentage objects."""
-    colors = []
+def _format_dataframe(df: pd.DataFrame) -> Iterable[dict[str, Any]]:
+    """Format DataFrame color / percentage objects."""
     for row in df.itertuples(index=False):
         logger.info("Formatting DataFrame row %s", row)
-        item = {"color": row.hex, "percentage": row.prevalence}
-        colors.append(item)
-    return colors
+        yield {"color": row.hex, "percentage": row.prevalence}
 
 
 def render_page(fpath: Path, df: pd.DataFrame) -> str:

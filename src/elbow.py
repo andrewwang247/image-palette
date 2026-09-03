@@ -31,7 +31,7 @@ def cluster_count(
         MAX_CLUSTERS,
     )
 
-    inertias = []
+    inertias: list[float] = []
     cluster_range = range(MIN_CLUSTERS, MAX_CLUSTERS + 1)
     for n_clusters in cluster_range if verbose else tqdm(cluster_range):
         kms = KMeans(n_clusters, random_state=rand_state, verbose=1 if verbose else 0)
