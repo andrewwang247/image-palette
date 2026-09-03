@@ -10,7 +10,7 @@ from typing import TextIO
 from click import File, IntRange, command, option
 from click import Path as cPath
 
-from src import cluster_count, compute_palette, get_pixels, render_page
+from src import Clustering, Display, Pixels
 
 
 @command()
@@ -50,12 +50,14 @@ def main(
 ) -> None:
     """Extract color palette from provided image."""
     logging.basicConfig(level=logging.INFO if verbose else logging.WARNING)
-    pixels = get_pixels(image_path)
-    optimal_k = cluster_count(pixels, verbose=verbose) if clusters is None else clusters
-    df = compute_palette(pixels, optimal_k, verbose=verbose)
+    pixels = Pixels(image_path)
+    clustering = Clustering(pixels.as_ok_lab(), verbose=verbose)
+    num_colors = clusters or clustering.cluster_count()
+    df = clustering.compute_palette(num_colors)
     print(df.to_string(index=False))
     if output_file:
-        html = render_page(image_path, df)
+        display = Display()
+        html = display.render_page(image_path, df)
         output_file.write(html)
 
 
