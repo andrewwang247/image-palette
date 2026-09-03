@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 from typing import TextIO
 
-from click import File, command, option
+from click import File, IntRange, command, option
 from click import Path as cPath
 
 from src import cluster_count, compute_palette, get_pixels, render_page
@@ -27,7 +27,7 @@ from src import cluster_count, compute_palette, get_pixels, render_page
     "--clusters",
     "-c",
     required=False,
-    type=int,
+    type=IntRange(1, 10),
     default=None,
     help="Number of palette colors. Automatic if not set.",
 )
