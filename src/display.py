@@ -34,6 +34,7 @@ class Display:
 
     def render_page(self, img_path: Path, df: pd.DataFrame) -> str:
         """Display palette in a webpage."""
+        assert img_path.is_file(), f"Path {img_path} is not a file."
         logger.info("Rendering template with palette data")
         return self.template.render(
             filename=img_path.name,

@@ -33,12 +33,14 @@ class Clustering:
 
     def compute_palette(self, num_colors: int) -> pd.DataFrame:
         """Compute color palette from image and organize in DataFrame."""
+        assert num_colors > 0, f"Num colors must be positive but was {num_colors}."
         logger.info("Clustering image pixels into %d palette colors", num_colors)
-        kms = self.__get_kms(num_colors, CLUSTER_INITS)
+
+        kms = self._get_kms(num_colors, CLUSTER_INITS)
         labels = kms.fit_predict(self.pixels)
         cluster_sizes = np.bincount(labels)
         centers = Pixels.to_rgb(kms.cluster_centers_)
-        prevalence = cluster_sizes / np.shape(labels)[0]
+        prevalence = cluster_sizes / labels.shape[0]
 
         logger.info("Organizing information into DataFrame")
         df = pd.DataFrame(columns=["hex", "red", "green", "blue", "prevalence"])
@@ -62,7 +64,7 @@ class Clustering:
 
         cluster_rng = range(MIN_ELBOW_CLUSTERS, MAX_ELBOW_CLUSTERS + 1)
         iter_rng = cluster_rng if self.verbose else tqdm(cluster_rng)
-        inertias = [self.__get_kms(n).fit(self.pixels).inertia_ for n in iter_rng]
+        inertias = [self._get_kms(n).fit(self.pixels).inertia_ for n in iter_rng]
 
         knee_locator = KneeLocator(
             x=cluster_rng,
@@ -76,7 +78,7 @@ class Clustering:
         logger.info("Detected elbow at %d clusters", elbow)
         return int(elbow)
 
-    def __get_kms(self, n_clusters: int, n_init: int | None = None) -> KMeans:
+    def _get_kms(self, n_clusters: int, n_init: int | None = None) -> KMeans:
         """Initialize a configured KMeans instance with given clusters."""
         return KMeans(
             n_clusters=n_clusters,
