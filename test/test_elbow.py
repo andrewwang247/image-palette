@@ -25,4 +25,4 @@ def test_elbow(pixels: Pixels, expected_clusters: int) -> None:
     """Test elbow method for images."""
     clustering = Clustering(pixels.as_ok_lab(), RANDOM_SEED)
     actual_clusters = clustering.cluster_count()
-    assert expected_clusters == actual_clusters
+    assert actual_clusters == expected_clusters
