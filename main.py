@@ -50,8 +50,7 @@ def main(
 ) -> None:
     """Extract color palette from provided image."""
     logging.basicConfig(level=logging.INFO if verbose else logging.WARNING)
-    pixels = Pixels(image_path)
-    clustering = Clustering(pixels.as_ok_lab(), verbose=verbose)
+    clustering = Clustering(Pixels(image_path).as_ok_lab(), verbose=verbose)
     num_colors = clusters or clustering.cluster_count()
     df = clustering.compute_palette(num_colors)
     print(df.to_string(index=False))

@@ -28,6 +28,7 @@ class Pixels:
     def __init__(self, fpath: Path) -> None:
         """Import image file from path and downsize."""
         logger.info("Opening image file %s", fpath)
+        assert fpath.is_file(), f"Path {fpath} is not a file."
         self.img = Image.open(fpath)
         logger.info("Before resampling: %d x %d px", self.img.width, self.img.height)
         self.img.thumbnail(MAX_DIM, Image.Resampling.LANCZOS)
