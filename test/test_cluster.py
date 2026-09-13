@@ -34,6 +34,6 @@ def test_cluster(lab_pixels: FloatGrid, expected_df: pd.DataFrame) -> None:
     clustering = Clustering(lab_pixels, RANDOM_SEED)
     actual_df = clustering.compute_palette(expected_df.shape[0])
     pd.testing.assert_frame_equal(
-        expected_df.sort_values(by="hex").reset_index(drop=True),
         actual_df.sort_values(by="hex").reset_index(drop=True),
+        expected_df.sort_values(by="hex").reset_index(drop=True),
     )
