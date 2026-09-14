@@ -13,11 +13,11 @@ from tqdm import tqdm
 
 from .pixel import FloatGrid, Pixels
 
-CLUSTER_INITS = 3
+logger = logging.getLogger(__name__)
+
 MIN_ELBOW_CLUSTERS = 3
 MAX_ELBOW_CLUSTERS = 8
-
-logger = logging.getLogger(__name__)
+_CLUSTER_INITS = 3
 
 
 class Clustering:
@@ -36,7 +36,7 @@ class Clustering:
         assert num_colors > 0, f"Num colors must be positive but was {num_colors}."
         logger.info("Clustering image pixels into %d palette colors", num_colors)
 
-        kms = self._get_kms(num_colors, CLUSTER_INITS)
+        kms = self._get_kms(num_colors, _CLUSTER_INITS)
         labels = kms.fit_predict(self.pixels)
         cluster_sizes = np.bincount(labels)
         centers = Pixels.to_rgb(kms.cluster_centers_)
