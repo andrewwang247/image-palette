@@ -74,7 +74,7 @@ class Clustering:
         )
 
         elbow = knee_locator.elbow
-        assert elbow is not None, "Did not find an elbow"
+        assert elbow, "Did not find an elbow in range"
         logger.info("Detected elbow at %d clusters", elbow)
         return int(elbow)
 
